@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% include 'navbar.html' %}
+
+{% block content %}
+{% if book %}
+	<div class="container my-5">
+		<div class="card book_big_card">
+			<div class="row g-0">
+				<div class="col-md-3">
+					{% if book.imageLinks.thumbnail %}
+						<img src="{{ book.imageLinks.thumbnail }}" class="card-img" alt="Book Cover">
+					{% else %}
+						<img src="{{ url_for('static', filename='images/default_cover.jpg') }}" class="card-img" alt="Book Cover">
+					{% endif %}
+				</div>
+				<div class="col-md-9">
+					<div class="card-body">
+						<h3 class="card-title">{{ book.title }}</h3>
+						{% if book.authors %}
+							<p class="card-text"><strong>Authors:</strong> {{ ', '.join(book.authors) }}</p>
+						{% endif %}
+						{% if book.description %}
+							<p class="card-text"><strong>Description:</strong> {{ book.description }}</p>
+						{% endif %}
+						{% if book.printType %}
+							<p class="card-text"><strong>Print Type:</strong> {{ book.printType }}</p>
+						{% endif %}
+						{% if book.pageCount %}
+							<p class="card-text"><strong>Page Count:</strong> {{ book.pageCount }}</p>
+						{% endif %}
+						{% if book.categories %}
+							<p class="card-text"><strong>Categories:</strong> {{ ', '.join(book.categories) }}</p>
+						{% endif %}
+						{% if book.averageRating %}
+							<p class="card-text"><strong>Average Rating:</strong> {{ book.averageRating }}</p>
+						{% endif %}
+						{% if book.canonicalVolumeLink %}
+							<a href="{{ book.canonicalVolumeLink }}" class="btn btn-sm btn-info">Click here to preview <i class="bi bi-eye-fill"></i></a>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="content box_shadow p-5 mt-5">
+	<h2 style="color: #333">Profile</h2>
+
+	<form method="post" action="{{ url_for('create_profile') }}" id="profileForm" class="mt-2">
+
+		<p>Select your interests(max 5): </p>
+		<div class="interest-container">
+			{% for interest in interests %}
+			<div class="interest-tile">
+				<input type="checkbox" id="{{ interest }}" name="interests[]" value="{{ interest }}"
+					class="interest-checkbox" {% if interest in user_interests %}checked{% endif %}>
+				<label for="{{ interest }}">{{ interest }}</label>
+			</div>
+			{% endfor %}
+		</div>
+
+		<div class="form-floating box_shadow my-4">
+			<textarea class="form-control" id="floatingTextarea2" style="height: 100px" name="bio">{{ user_bio }}</textarea>
+			<label for="floatingTextarea2">Profile Bio(Optional)</label>
+		</div>
+
+		<button class="btn btn-success" type="submit">Save</button>
+		<a href="{{ url_for('home') }}" class="btn btn-danger">Cancel</a>
+	</form>
+
+	<!-- to limit max interests selected to 5 -->
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			var checkboxes = document.querySelectorAll('.interest-checkbox');
+
+			checkboxes.forEach(function (checkbox) {
+				checkbox.addEventListener('change', function () {
+					var checkedCheckboxes = document.querySelectorAll('.interest-checkbox:checked');
+
+					if (checkedCheckboxes.length > 5) {
+						alert('Please select a maximum of 5 interests.');
+						this.checked = false;
+					}
+				});
+			});
+		});
+	</script>
+
+</div>
+{% endblock content %}

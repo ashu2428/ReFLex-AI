@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% include 'navbar.html' %}
+
+{% block content %}
+{% if entries %}
+	<div class="mt-4">
+		{% for entry in entries %}
+			<div class="card box_shadow mb-5">
+				<div class="card-header d-flex justify-content-between align-items-center">
+					<h3>{{ entry.diary_title }}</h3>
+				</div>
+				<div class="card-body">
+					<p class="card-subtitle text-muted mb-2">
+						<span class="d-block"><i class="bi bi-calendar"></i> Created:
+							{{ entry.diary_created.strftime("%d/%m/%Y %H:%M") }}</span>
+
+						{% if entry.diary_modified %}
+						<span class="d-block"><i class="bi bi-clock-history"></i> Modified:
+							{{ entry.diary_modified.strftime("%d/%m/%Y %H:%M") }}</span>
+						{% endif %}
+
+						{% if entry.diary_tag %}
+						<span class="d-block"><i class="bi bi-tag"></i> Tag: {{ entry.diary_tag }}</span>
+						{% endif %}
+
+						{% if entry.emotion %}
+						<span class="d-block"><i class="bi bi-binoculars"></i> Emotion: {{ entry.emotion }}</span>
+						{% endif %}
+
+						{% if entry.author_username %}
+						<span class="d-block"><i class="bi bi-person-lines-fill"></i> Author: 
+							<span
+								class="badge rounded-pill text-bg-secondary">{{ entry.author_username }}
+							</span>
+						</span>
+						{% endif %}
+					</p>
+
+					<!-- To render the diary content with the proper formatting, you can use the safe filter provided by Jinja2. The safe filter tells Jinja2 to treat the content as safe HTML and render it accordingly. -->
+					<div class="card-text mt-4 truncated-content">
+						{{ entry.diary_content|safe }}
+						<span class="text-muted">... </span>
+					</div>
+				</div>
+				
+				<div class="card-footer">
+					<a href="{{ url_for('view_entry', entry_id=entry._id|string) }}" class="text-decoration-none">Read More...</a>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+{% endif %}
+
+{% endblock content %}

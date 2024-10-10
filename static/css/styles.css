@@ -1,0 +1,148 @@
+/* for 'text_editor.html' */
+.title-input {
+	font-size: 2rem;
+	border: none;
+	width: 100%;
+	padding: 5px;
+	border-bottom: 2px solid #e3e8ee;
+}
+
+.title-input:focus{
+	outline: none;
+}
+
+.tag-input {
+	font-size: 1.4rem;
+    border: none;
+	width: 100%;
+    padding: 5px;
+	border-bottom: 2px solid #e3e8ee;
+}
+
+.tag-input:focus {
+    outline: none;
+}
+
+.active-button {
+	background-color: #c6c6c7;
+}
+
+#editor{
+	margin-top: 2%;
+	background-color: #f8f9fa;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+	transition: box-shadow 0.3s ease;
+}
+
+#editor-toolbar {
+	width: 100%;
+	padding: 4px;
+	border: 1px solid #495057;
+}
+
+#editor-toolbar .btn {
+	border-radius: 50%;
+	margin-right: 7px;
+	background-color: #f8f9fa;
+	color: #495057;
+	transition: background-color 0.3s ease;
+}
+
+#editor-toolbar .btn:hover {
+	background-color: #e0e3e6;
+}
+
+#editor-toolbar .bi {
+	font-size: 1.6rem;
+}
+
+#diary-content {
+	padding: 10px;
+	font-size: 1.2rem;
+	box-sizing: border-box;
+	height: 400px;
+}
+
+/* for 'view_diary.html' */
+.text-muted{
+	font-size: 0.85rem;
+}
+
+/* for 'navbar.html' */
+.navbar{
+	background-color: #454545;
+}
+
+/* when books are rendered */
+.book_card:hover{
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	transform: translateY(-2px);
+	cursor: pointer;
+}
+
+.book_big_card {
+	border: none;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+	transition: box-shadow 0.3s ease;
+}
+
+.book_big_card:hover {
+	box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+}
+
+/* for 'plot.html' */
+.chart-container {
+	border: 1px solid #e2e2e2;
+	border-radius: 3px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+	padding: 10px;
+	background-color: #fff;
+	margin-bottom: 20px;
+}
+.chart-container:hover {
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+/* for 'index.html' */
+.diary-card {
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease;
+}
+
+.diary-card:hover {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.box_shadow{
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* for interests */
+.interest-container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.interest-tile {
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	padding: 10px;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+.interest-checkbox {
+	margin-right: 8px;
+}
+
+/* for social feed diary entries */
+.truncated-content {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	/* Number of lines to show */
+	-webkit-box-orient: vertical;
+}

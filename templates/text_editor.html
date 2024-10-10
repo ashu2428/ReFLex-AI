@@ -1,0 +1,72 @@
+{% extends 'layout.html' %}
+
+{% include 'navbar.html' %}
+
+{% block content %}
+<form action="{{ url_for('save_diary', entry_id=entry._id|string if entry else None) }}" method="post">
+
+	<div class="diary-title my-4">
+		<input type="text" class="title-input" name="diary_title" placeholder="Give a name for your diary entry..." autofocus value="{{ entry.diary_title if entry else '' }}" />
+	</div>
+
+	<div class="diary-tag">
+		<input type="text" class="tag-input" name="diary_tag" list="tags" placeholder="Give tag..." value="{{ entry.diary_tag if entry else '' }}" autocomplete="off" />
+		<datalist id="tags">
+			{% for tag in tags %}
+				<option value="{{ tag }}">{{ tag }}</option>
+			{% endfor %}
+		</datalist>
+	</div>
+
+	<div id="editor">
+		<div class="d-flex justify-content-start" id="editor-toolbar">
+			<button type="button" class="btn btn-sm" id="boldBtn" onclick="toggleFormatting('bold')" title="Bold">
+				<i class="bi bi-type-bold"></i>
+			</button>
+			<button type="button" class="btn btn-sm" id="italicBtn" onclick="toggleFormatting('italic')" title="Italic">
+				<i class="bi bi-type-italic"></i>
+			</button>
+			<button type="button" class="btn btn-sm" id="underlineBtn" onclick="toggleFormatting('underline')" title="Underline">
+				<i class="bi bi-type-underline"></i>
+			</button>
+			<button type="button" class="btn btn-sm" id="strikethroughBtn" onclick="toggleFormatting('strikethrough')" title="Strikethrough">
+				<i class="bi bi-type-strikethrough"></i>
+			</button>
+			<button type="button" class="btn btn-sm" id="insertUnorderedListBtn" onclick="toggleFormatting('insertUnorderedList')" title="Unordered List">
+				<i class="bi bi-list-ul"></i>
+			</button>
+			<button type="button" class="btn btn-sm" id="insertOrderedListBtn" onclick="toggleFormatting('insertOrderedList')" title="Ordered List">
+				<i class="bi bi-list-ol"></i>	
+			</button>
+			<button type="button" class="btn btn-sm" id="justifyLeftBtn" onclick="toggleFormatting('justifyLeft')" title="Justify Left">
+				<i class="bi bi-text-left"></i>
+			</button>
+			<button type="button" class="btn btn-sm" id="justifyCenterBtn" onclick="toggleFormatting('justifyCenter')" title="Justify justifyCenter">
+				<i class="bi bi-text-center"></i>
+			</button>
+			<button type="button" class="btn btn-sm" id="justifyRightBtn" onclick="toggleFormatting('justifyRight')" title="Justify Right">
+				<i class="bi bi-text-right"></i>
+			</button>
+			<button type="button" class="btn btn-sm" id="undoBtn" onclick="toggleFormatting('undo')" title="Undo">
+				<i class="bi bi-arrow-counterclockwise"></i>
+			</button>
+			<button type="button" class="btn btn-sm" id="redoBtn" onclick="toggleFormatting('redo')" title="Redo">
+				<i class="bi bi-arrow-clockwise"></i>
+			</button>
+			<button type="button" class="btn btn-sm" id="createLinkBtn" onclick="addLink()" title="Add Link">
+				<i class="bi bi-link-45deg"></i>
+			</button>
+		</div>
+		
+		<div contenteditable="true" id="diary-content">
+			{{ entry.diary_content|safe if entry else '' }}
+		</div>
+		<input type="hidden" name="diary_content" id="hidden-diary-content">	
+	</div>
+
+	<div class="d-flex justify-content-end mt-2">
+		<a type="button" class="btn btn-outline-danger me-3" href="{{ url_for('home') }}">Cancel</a>
+		<button type="submit" class="btn btn-success" onclick="save_diary()">Save Entry</button>
+	</div>
+</form>
+{% endblock %}

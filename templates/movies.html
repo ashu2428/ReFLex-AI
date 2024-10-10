@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% include 'navbar.html' %}
+
+{% block content %}
+{% if movies %}
+<h3 class="my-4">Movie Recommendations: </h3>
+<div class="container d-flex flex-wrap">
+	{% for movie in movies %}
+	<a href="{{ url_for('movies', movie_id=movie._id|string) }}" class="card text-center mt-4 mx-3 book_card"
+		style="width: 13rem; text-decoration: none;">
+		{% if movie.poster_path %}
+		<img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" class="card-img-top" alt="Movie Cover">
+		{% else %}
+		<img src="{{ url_for('static', filename='images/default_cover.jpg') }}" class="card-img-top" alt="Movie Cover">
+		{% endif %}
+		<div class="card-body d-flex flex-column justify-content-between">
+			<div>
+				<h5 class="card-title">{{ movie.original_title }}</h5>
+				{% if movie.release_date %}
+				<p class="card-text text-muted">Release Date: {{ movie.release_date }}</p>
+				{% endif %}
+				{% if movie.vote_average %}
+				<p class="card-text text-muted">Average Vote: {{ movie.vote_average }}</p>
+				{% endif %}
+			</div>
+		</div>
+	</a>
+	{% endfor %}
+</div>
+{% endif %}
+{% endblock content %}

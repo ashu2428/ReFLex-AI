@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand-lg navbar-dark">
+	<div class="container">
+		<a class="navbar-brand" href="{{ url_for('home') }}">RefleX</a>
+	
+		<ul class="navbar-nav ms-auto me-4">
+			<li class="nav-item">
+				<a class="nav-link" href="{{ url_for('social_feed') }}"><i class="bi bi-people"></i></i> Social Feed</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{ url_for('books') }}"><i class="bi bi-book"></i> Book Recommendations</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{ url_for('movies') }}"><i class="bi bi-film"></i> Movie Recommendations</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{ url_for('write') }}"><i class="bi bi-file-earmark-plus"></i> New Entry</a>
+			</li>
+		</ul>
+		
+		<ul class="navbar-nav">
+			<div class="dropdown-center">
+				<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+					{{ current_user.username }}
+				</button>
+			
+				<ul class="dropdown-menu">
+					<li><a class="dropdown-item" href="{{ url_for('view_profile') }}">View Profile</a></li>
+					<li><a class="dropdown-item" href="{{ url_for('plot') }}">Generate Visualizations</a></li>
+					<li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
+				</ul>
+			</div>
+		</ul>
+	</div>
+</nav>

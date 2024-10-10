@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+
+{% include 'navbar.html' %}
+
+{% block content %}
+	<form method="POST" action="{{ url_for('home') }}" id="filterForm">
+		<div class="row g-5">
+			<div class="col-md-4">
+				<h3 class="mt-4"><i class="bi bi-journal-bookmark"></i> My Diary Entries</h3>
+			</div>
+
+			<div class="col-md-4">
+				<div class="form-group mt-4 box_shadow">
+					<select class="form-control" id="filterType" name="filter_type" onchange="toggleFilterOptions()">
+						<option value="" disabled selected>Filter By</option>
+						<option value="tag">Tag</option>
+						<option value="emotion">Emotion</option>
+					</select>
+				</div>
+			</div>
+		
+			<div class="col-md-4">
+				<div id="tagFilter" style="display: none;">
+					<div class="form-group mt-4 box_shadow">
+						<select class="form-control" name="tag" onchange="submitForm()">
+							<option value="" disabled selected>Select Tag</option>
+							{% for tag in tags %}
+								<option value="{{ tag }}">{{ tag }}</option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+				<div id="emotionFilter" style="display: none;">
+					<div class="form-group mt-4 box_shadow">
+						<select class="form-control" name="emotion" onchange="submitForm()">
+							<option value="" disabled selected>Select Emotion</option>
+							{% for emotion in emotions %}
+								<option value="{{ emotion }}">{{ emotion }}</option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<div class="row g-5 mt-2">
+		<div class="col-md-6">
+			<form method="GET" action="{{ url_for('home') }}" class="mb-4">
+				<div class="input-group box_shadow">
+					<input type="text" class="form-control" name="search_keyword" placeholder="Search for diary entries...">
+					<button type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	{% if entries %}
+		<div class="mt-2">
+			{% for entry in entries %}
+			<div class="card mb-4 diary-card">
+				<a href="{{ url_for('view_entry', entry_id=entry._id|string) }}" class="text-decoration-none">
+					<div class="card-body">
+						<h3 class="card-title">{{ entry.diary_title }}</h3>
+						<p class="card-subtitle text-muted mb-2">
+							<span class="d-block"><i class="bi bi-calendar"></i> Created: {{ entry.diary_created.strftime("%d/%m/%Y %H:%M") }}</span>
+
+							{% if entry.diary_modified %}
+								<span class="d-block"><i class="bi bi-clock-history"></i> Modified: {{ entry.diary_modified.strftime("%d/%m/%Y %H:%M") }}</span>
+							{% endif %}
+
+							{% if entry.diary_tag %}
+								<span class="d-block"><i class="bi bi-tag"></i> Tag: {{ entry.diary_tag }}</span>
+							{% endif %}
+
+							{% if entry.emotion %}
+								<span class="d-block"><i class="bi bi-binoculars"></i> Emotion: {{ entry.emotion }}</span>
+							{% endif %}
+						</p>
+					</div>
+				</a>
+				<div class="card-footer">
+					<a href="{{ url_for('edit_entry', entry_id=entry._id|string) }}" class="btn btn-primary btn-sm me-2" title="Edit"><i class="bi bi-pencil-square"></i> Edit</a>
+					
+					<!-- visibility button based on visibility value -->
+					{% if entry.visibility == 1 %}
+						<a href="{{ url_for('change_visibility', entry_id=entry._id|string) }}" class="btn btn-secondary btn-sm me-2" title="Private"><i class="bi bi-file-lock"></i> Make Private</a>
+					{% else %}
+						<a href="{{ url_for('change_visibility', entry_id=entry._id|string) }}" class="btn btn-secondary btn-sm me-2" title="Public"><i class="bi bi-unlock"></i> Make Public</a>
+					{% endif %}
+					
+					<a href="{{ url_for('delete_entry', entry_id=entry._id|string) }}" class="btn btn-danger btn-sm" title="Delete"><i class="bi bi-trash3"></i> Delete</a>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	{% endif %}
+{% endblock content %}

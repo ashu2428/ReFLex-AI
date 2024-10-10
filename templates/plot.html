@@ -1,0 +1,143 @@
+{% extends "layout.html" %}
+
+{% include 'navbar.html' %}
+
+{% block content %}
+	<div class="container">
+		<h3 class="my-4">Range Plot</h3>
+		<form action="{{ url_for('plot') }}" method="post">
+			<div class="row mb-4 d-flex align-items-end">
+				<div class="col-md-4">
+					<label for="start_date" class="form-label">Start Date:</label>
+					<input type="date" id="start_date" name="start_date" class="form-control" required>
+				</div>
+				<div class="col-md-4">
+					<label for="end_date" class="form-label">End Date:</label>
+					<input type="date" id="end_date" name="end_date" class="form-control" required disabled>
+				</div>
+				<div class="col-md-4">
+					<button type="submit" class="btn btn-primary">Generate Plot</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	
+	<div class="container mt-5">
+		<div class="row">
+			<div class="col-md-6">
+				<h4>Distribution of emotions</h4>
+				<div class="chart-container">
+					<canvas id="pieChart"></canvas>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<h4>Barchart of emotions</h4>
+				<div class="chart-container">
+					<canvas id="barChart"></canvas>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock content %}
+
+{% block javascript %}
+	<!-- Chart.js cdn -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+	<script>
+		// Get counts and emotions from Flask template
+		const counts = {{ counts|safe }};
+		const emotions = {{ emotions|safe }};
+		
+		// Generate dynamic colors based on the emotions
+		const colors = generateColors(emotions);
+
+		// Create the pie chart using Chart.js
+		const pieCtx = document.getElementById('pieChart').getContext('2d');
+		new Chart(pieCtx, {
+			type: 'pie',
+			data: {
+				labels: emotions,
+				datasets: [{
+					label: 'Emotions in Diary Entries',
+					data: counts,
+					backgroundColor: colors,
+					borderWidth: 1
+				}]
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false
+			}
+		});
+
+		// Create the bar chart using Chart.js
+		const barCtx = document.getElementById('barChart').getContext('2d');
+		new Chart(barCtx, {
+			type: 'bar',
+			data: {
+				labels: emotions,
+				datasets: [{
+					label: 'Emotions in Diary Entries',
+					data: counts,
+					backgroundColor: colors,
+					borderWidth: 1
+				}]
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				scales: {
+					y: {
+						beginAtZero: true,
+						ticks: {
+							stepSize: 1
+						}
+					}
+				}
+			}
+		});
+
+		// Function to generate dynamic colors based on emotions
+		function generateColors(emotions) {
+			const colors = [];
+			const emotionColors = 
+			{
+				'admiration': '#FF7F50',
+				'amusement': '#FFD700',
+				'anger': '#FF0000',
+				'annoyance': '#FF4500',
+				'approval': '#00FF7F',
+				'caring': '#FF69B4',
+				'confusion': '#FFFF00',
+				'curiosity': '#1E90FF',
+				'desire': '#8A2BE2',
+				'disappointment': '#1E90FF',
+				'disapproval': '#FF6347',
+				'disgust': '#8B008B',
+				'embarrassment': '#FFC0CB',
+				'excitement': '#FF4500',
+				'fear': '#FF8C00',
+				'gratitude': '#FFD700',
+				'grief': '#696969',
+				'joy': '#FFD700',
+				'love': '#FF1493',
+				'nervousness': '#FFFF00',
+				'optimism': '#32CD32',
+				'pride': '#FFD700',
+				'realization': '#00CED1',
+				'relief': '#00FF00',
+				'remorse': '#8B0000',
+				'sadness': '#1E90FF',
+				'surprise': '#FFD700',
+				'neutral': '#808080'
+			};
+			
+			for (let emotion of emotions) {
+				const color = emotionColors[emotion];
+				colors.push(color);
+			}
+			return colors;
+		}
+	</script>
+{% endblock javascript %}
