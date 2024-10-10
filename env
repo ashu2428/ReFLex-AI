@@ -1,0 +1,4 @@
+MONGODB_URI="mongodb+srv://ashu:ashu@reflex-cluster.bea4qe6.mongodb.net/?ssl=true&ssl_cert_reqs=CERT_NONE&retryWrites=true&w=majority"
+SECRET_KEY = "kukjh"
+GOOGLE_BOOkS_API = "AIzaSyCJjV5b7m1UGH-sk5nx_qp7Or8XFhnmmjM"
+TMDB_MOVIE_API = "00762c6d47184b36b8d9db145f608e27"

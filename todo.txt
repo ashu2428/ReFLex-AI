@@ -1,0 +1,3 @@
+- book add to favourite
+- split code into modules and packages
+- model performance
